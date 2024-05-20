@@ -1,26 +1,23 @@
-def enter_key_value_pairs():
-    # Initialize an empty dictionary to store key-value pairs
-    key_value_pairs = {}
+from datetime import datetime
+
+def calculate_age():
     
-    while True:
-        key = input("Enter key (or type 'stop' to finish): ").strip()
-        
-        # Check if the user wants to stop entering values
-        if key.lower() == 'stop':
-            break
-        
-        value = input("Enter value for {}: ".format(key)).strip()
-        
-        # Store the key-value pair in the dictionary
-        key_value_pairs[key] = value
+    dob_input = input("Enter your date of birth (DD-MM-YYY): ")
     
-    return key_value_pairs
+    try:
+        dob_date = datetime.strptime(dob_input, '%d-%m-%Y')
 
+        today = datetime.today()
 
-pairs = enter_key_value_pairs()
+        age = today.year - dob_date.year
+        
+        if (today.month, today.day) < (dob_date.month, dob_date.day):
+            age -= 1
+        
+        return age
+    
+    except ValueError:
+        return "Invalid date format"
 
-
-print("\nEntered key-value pairs:")
-for key, value in pairs.items():
-    print("Key:", key)
-    print("Value:", value)
+age = calculate_age()
+print(f"Your age is: {age}")
